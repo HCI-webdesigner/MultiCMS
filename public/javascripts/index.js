@@ -1,4 +1,7 @@
+
 $(document).ready(function() {
+    initSideBar();
+
     $("div.sidebar li").hover(
         function () {
             $(this).find("a").css("color", "#fff");
@@ -20,7 +23,6 @@ $(document).ready(function() {
             })
         }
     );
-
     for(var i = 0; i < $("div.sidebar").find("a").length; i ++){
         var obj = $("div.sidebar").find("a")[i];
         if(obj.id != ""){
@@ -31,7 +33,6 @@ $(document).ready(function() {
     }
 
     $(window).scroll(function(){
-        //alert($(window).scrollTop());
         if($(window).scrollTop() >= 85){
             $("div.sidebar").css("top" , 0);
             $("div.sidebar").css("position", "fixed");

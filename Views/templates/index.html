@@ -3,22 +3,22 @@
 <head>
     <meta charset="utf-8"/>
     <title>登录</title>
-    <link rel="stylesheet" href="../../public/stylesheets/font.css" />
-    <link rel="stylesheet" href="../../public/stylesheets/index.css" />
+    <link rel="stylesheet" href="{$ROOTDIR}/public/stylesheets/font.css" />
+    <link rel="stylesheet" href="{$ROOTDIR}/public/stylesheets/index.css" />
 </head>
 <body>
-<div class="top1">
+<!-- <div class="top1">
                 <span>
                     <a href="#" title="注册">注册</a>
                 </span>
-</div>
+</div> -->
 <div class="logo">
             <span>
                 <h1>MultiCMS</h1>
             </span>
 </div>
 <div id="login" class="login">
-    <form action="" method="post">
+    <form action="index/login" method="post">
 
         <h2>登录</h2>
         <table>
@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <th><label>密码：</label></th>
-                <td><input type="password" name="passwd"/></td>
+                <td><input type="password" name="password"/></td>
             </tr>
             <tr>
                 <th></th>

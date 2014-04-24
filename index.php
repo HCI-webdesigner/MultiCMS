@@ -24,6 +24,7 @@ $db = new Database($db_url, $db_port, $db_user, $db_pwd, $db_name, $useDB);
  */
 $router = new Router();
 //===========增加路由规则==============
-$router->addRule('test','index');
+$router->addRule('index','index');
+$router->addRule('main','main');
 //===================================
 $router->run();

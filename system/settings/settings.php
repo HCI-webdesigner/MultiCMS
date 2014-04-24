@@ -26,5 +26,11 @@ define('DF_CTRLER', 'index');
 /*
  * 定义全局静态变量
  */
-define('BASEDIR', __dir__ . '/../..');   //获取根目录路径
-define('ENVIRONMENT', 'DEV');   //运行环境，有两个取值，DEV为开发者环境，PRODUCT为线上环境
+//获取根目录路径
+define('BASEDIR', __dir__ . '/../..');
+
+//获取基础域名
+define('BASEDOMAIN', 'http://' . $_SERVER['SERVER_NAME'] . '/MultiCMS');
+
+//运行环境，有两个取值，DEV为开发者环境，PRODUCT为线上环境
+define('ENVIRONMENT', 'DEV');

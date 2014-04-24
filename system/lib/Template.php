@@ -34,5 +34,6 @@ class template extends Smarty {
         }
 
         $this->assign('app_name', 'MultiCMS');
+        $this->assign('ROOTDIR', BASEDOMAIN);
     }
 }

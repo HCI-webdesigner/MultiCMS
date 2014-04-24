@@ -63,6 +63,14 @@ class sys {
     }
 
     /*
+     * redirect方法
+     */
+    static function redirect($url) {
+        echo '<script type="text/javascript">location.href = \'' . $url . '\';</script>';
+        exit(0);
+    }
+
+    /*
      * load方法
      * 用于加载系统自带的一些库
      * @author C860

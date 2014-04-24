@@ -14,4 +14,21 @@ class index extends Controller {
         $this->render('index', $vars);
     }
 
+    function login() {
+        if(isset($_POST['user']) && !empty($_POST['user'])
+        && isset($_POST['password']) && !empty($_POST['password'])) {
+            $user = $_POST['user'];
+            $password = $_POST['password'];
+            if($user == 'hci' && $password == '123') {
+                sys::redirect(BASEDOMAIN . '/main');
+            }
+            else {
+                sys::redirect(BASEDOMAIN);
+            }
+        }
+        else {
+            sys::redirect(BASEDOMAIN);
+        }
+    }
+
 }

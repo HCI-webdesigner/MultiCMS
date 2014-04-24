@@ -1,19 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{$indexTitle}</title>
-        <link rel="stylesheet" href="public/stylesheets/index.css">
-    </head>
-    <body>
-        <div class="welcome_box">
-            <h1>PFW</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>{$indexTitle}</title>
+    <style type="text/css">
+    ul,li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .login {
+        margin: 0 auto;
+        width: 500px;
+        height: 300px;
+    }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <h1>Login</h1>
+        <form action="index/login" method="post">
             <ul>
-                欢迎使用PFW！PFW是一个轻量级的框架，它的特点有：
-                <li>实现了传统的MVC模式，让你的代码更赏心悦目</li>
-                <li>基于REST的智能路由派发，让你赶上时代的潮流</li>
-                <li>全新的ORM体验，让你不需要为建立数据库而烦恼</li>
+                <li>
+                    <input type="text" name="user">
+                </li>
+                <li>
+                    <input type="password" name="password">
+                </li>
+                <li>
+                    <input type="submit" value="login">
+                </li>
             </ul>
-        </div>
-    </body>
+        </form>
+    </div>
+</body>
 </html>

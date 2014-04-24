@@ -1,20 +1,131 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{$indexTitle}</title>
+    <meta charset="utf-8"/>
+    <title>MultiCMS</title>
+    <link rel="stylesheet" href="../../public/stylesheets/font.css" />
+    <link rel="stylesheet" href="../../public/stylesheets/index.css" />
+    <link rel="stylesheet" href="../../public/stylesheets/sidebar.css" />
+    <script src='../../public/javascripts/jquery.js'></script>
+    <script src="../../public/javascripts/index.js"></script>
+
 </head>
 <body>
-    <form action="" method="post">
-        <input id="newType" type="button" value="添加">
-        <div id="typebox"></div>
-    </form>
-    <script type="text/javascript">
-    document.getElementById('newType').addEventListener('click', function() {
-        if(prompt('请输入类别名称')) {
-            
-        }
-    });
-    </script>
+<div class="top1">
+            <span>
+                <a href="#" title="注册">注册</a>
+                <a href="login.html" title="登录">登录</a>
+            </span>
+</div>
+<div class="logo">
+            <span>
+                <h1>MultiCMS</h1>
+            </span>
+</div>
+
+<div class="content">
+    <div class="sidebar">
+        <h2><i class="fa fa-bars push"></i>分类</h2>
+        <ul>
+            <li>
+                <a href="#" id="addTags"><i class="fa fa-dashboard push"></i>添加分类<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+            </li>
+            <li>
+                <a href="#" id="web"><i class="fa fa-dashboard push"></i>前端<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-user push"></i>后台<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#" id="jsp">JSP<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                    <li>
+                        <a href="#" id="servlet">Servlet<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" id="software"><i class="fa fa-cog push"></i>程序开发<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#" id="table">报表/图表制作<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                    <li>
+                        <a href="#">模板引擎<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#" id="table1">报表/图表制作<i class="fa fa-angle-right"></i></a>
+                                <span class="hover"></span>
+                            </li>
+                            <li>
+                                <a href="#">模板引擎<i class="fa fa-angle-right"></i></a>
+                                <span class="hover"></span>
+                            </li>
+                            <li>
+                                <a href="#">搜索引擎<i class="fa fa-angle-right"></i></a>
+                                <span class="hover"></span>
+                            </li>
+                            <li>
+                                <a href="#">网络工具包<i class="fa fa-angle-right"></i></a>
+                                <span class="hover"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">搜索引擎<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                    <li>
+                        <a href="#">网络工具包<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-picture-o push"></i>应用工具<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+                <ul class="sub-menu">
+                    <li><a href="#">浏览器<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                    <li>
+                        <a href="#">杀毒软件<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-file push"></i>游戏/娱乐<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#">休闲游戏<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                    <li>
+                        <a href="#">单机游戏<i class="fa fa-angle-right"></i></a>
+                        <span class="hover"></span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-plane push"></i>其他开源<i class="fa fa-angle-right"></i></a>
+                <span class="hover"></span>
+            </li>
+        </ul>
+    </div>
+
+    <iframe src="" scrolling="no" frameborder="0" class="branch-content" name="mainContent" id="mainContent">
+
+    </iframe>
+</div>
 </body>
 </html>

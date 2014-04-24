@@ -1,37 +1,51 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{$indexTitle}</title>
-    <style type="text/css">
-    ul,li {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-    .login {
-        margin: 0 auto;
-        width: 500px;
-        height: 300px;
-    }
-    </style>
+    <meta charset="utf-8"/>
+    <title>登录</title>
+    <link rel="stylesheet" href="../../public/stylesheets/font.css" />
+    <link rel="stylesheet" href="../../public/stylesheets/index.css" />
 </head>
 <body>
-    <div class="login">
-        <h1>Login</h1>
-        <form action="index/login" method="post">
-            <ul>
-                <li>
-                    <input type="text" name="user">
-                </li>
-                <li>
-                    <input type="password" name="password">
-                </li>
-                <li>
-                    <input type="submit" value="login">
-                </li>
-            </ul>
-        </form>
-    </div>
+<div class="top1">
+                <span>
+                    <a href="#" title="注册">注册</a>
+                </span>
+</div>
+<div class="logo">
+            <span>
+                <h1>MultiCMS</h1>
+            </span>
+</div>
+<div id="login" class="login">
+    <form action="" method="post">
+
+        <h2>登录</h2>
+        <table>
+            <tr>
+                <th><label>用户名：</label></th>
+                <td><input type="text" name="user"/></td>
+            </tr>
+            <tr>
+                <th><label>密码：</label></th>
+                <td><input type="password" name="passwd"/></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input type="checkbox" id="autoLogin">下次自动登录</input>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="submit" class="submit" value="确定"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
 </body>
 </html>

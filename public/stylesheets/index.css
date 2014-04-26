@@ -18,6 +18,19 @@ table{
     width: 100%;
 }
 
+
+th {
+    margin: 7px;
+    padding: 0;
+    width: 100%;
+    font: 14px "microsoft yahei";
+    color: #333;
+    display: inline-block;
+}
+
+td{
+    width: 100%;
+}
 table label{
     display: inline-block;
     text-align: right;
@@ -35,13 +48,6 @@ a {
 
 
 
-th {
-    font: 14px "microsoft yahei";
-    color: #333;
-    padding: 0;
-    margin: 7px;
-    display: inline-block;
-}
 
 input {
     display: inline-block;
@@ -136,7 +142,7 @@ input:focus, textarea:focus {
 }
 
 .tags{
-    width: 300px;
+    width: 600px;
     margin: 40px auto 0 auto;
 }
 

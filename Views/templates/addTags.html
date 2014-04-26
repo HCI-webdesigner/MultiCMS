@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>添加标签</title>
     <link rel="stylesheet" href="../../public/stylesheets/index.css" />
+    <script src="../../public/javascripts/addTags.js"></script>
+    <script src="../../public/javascripts/functions.js"></script>
 </head>
 <body>
 <div id="tags" class="tags">
@@ -11,12 +13,10 @@
         <table>
             <tr>
                 <th><label>选择模块：</label></th>
-                <td><select>
-                    <option name="allTags" value="云计算">云计算</option>
-                    <option name="allTags" value="移动">移动</option>
-                    <option name="allTags" value=".NET">.NET</option>
-                    <option name="allTags" value="Java">Java</option>
-                </select></td>
+                <td>
+                    <div id="tagsSelection">
+                    </div>
+                </td>
             </tr>
             <tr>
                 <th><label>标签名：</label></th>

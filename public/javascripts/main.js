@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-    initSideBar();
+//    initSideBar();
 
     $("div.sidebar li").hover(
         function () {

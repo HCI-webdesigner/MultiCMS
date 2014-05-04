@@ -8,10 +8,10 @@ class main extends Controller {
     }
 
     function index() {
-        $vars['indexTitle'] = '你好，MultiCMS！';
+        $vars['indexTitle'] = 'MultiCMS——HCI内部CMS生成系统';
         
         //新版视图加载方法
-        $this->render('main', $vars);
+        $this->render('addTags', $vars);
     }
 
 }

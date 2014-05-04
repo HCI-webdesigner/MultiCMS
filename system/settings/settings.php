@@ -30,7 +30,7 @@ define('DF_CTRLER', 'index');
 define('BASEDIR', __dir__ . '/../..');
 
 //获取基础域名
-define('BASEDOMAIN', 'http://' . $_SERVER['SERVER_NAME']);
+define('BASEDOMAIN', 'http://' . $_SERVER['SERVER_NAME'] . '/MultiCMS');
 
 //运行环境，有两个取值，DEV为开发者环境，PRODUCT为线上环境
 define('ENVIRONMENT', 'DEV');

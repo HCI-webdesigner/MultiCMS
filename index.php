@@ -4,7 +4,7 @@
  * 
  * @Template   Smarty v3.1.18
  * @Copyright  Copyright (c) 2013 HCI@C860
- * @Version    0.3.3
+ * @Version    0.3.4
  */
 
 /*
@@ -14,18 +14,16 @@ include_once('system/settings/settings.php');
 include_once('system/core/moduleLoad.php');
 
 /*
- * 数据库模块初始化
+ * 自定义模块加载
  */
-$db_name = 'PFW';
-$db = new Database($db_url, $db_port, $db_user, $db_pwd, $db_name, $useDB);
+$mods_custom = ['Template'];
+sys::loadCustomModule($mods_custom);
 
 /*
  * 路由分派
  */
 $router = new Router();
 //===========增加路由规则==============
-$router->addRule('index','index');
-$router->addRule('main','main');
-$router->addRule('test', 'test');
+$router->addRule('test','index');
 //===================================
 $router->run();

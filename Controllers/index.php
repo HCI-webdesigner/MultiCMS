@@ -9,7 +9,6 @@ class index extends Controller {
 
     function index() {
         $vars['indexTitle'] = '你好，MultiCMS！';
-        
         //新版视图加载方法
         $this->render('index', $vars);
     }

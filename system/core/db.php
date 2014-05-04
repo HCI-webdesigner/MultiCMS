@@ -5,13 +5,14 @@
  */
 class Database {
 
-    var $_db;     //PDO数据库句柄
-    var $_url;    //数据库地址
-    var $_port;   //端口
-    var $_user;   //用户名
-    var $_pwd;    //密码
-    var $_name;   //数据库名
-    var $_models; //数据模型
+    private $_db;     //PDO数据库句柄
+    private $_url;    //数据库地址
+    private $_port;   //端口
+    private $_user;   //用户名
+    private $_pwd;    //密码
+    private $_name;   //数据库名
+    private $_models; //数据模型
+    public $instance; //对外数据库句柄
 
     /*
      * 构造函数
@@ -61,6 +62,16 @@ class Database {
     }
 
     /*
+     * getInstance方法
+     * 用于外部获取数据库句柄
+     * @author C860
+     * @return data 数据库句柄
+     */
+    public function getInstance() {
+        return $this->instance;
+    }
+
+    /*
      * getModels方法
      * 加载当前所有Models到_models列表中
      * @author C860
@@ -82,7 +93,7 @@ class Database {
      */
     protected function connect() {
         try {
-            $this->_db = new PDO("mysql:host=$this->_url;port=$this->_port",$this->_user,$this->_pwd);
+            $this->_db = $this->instance = new PDO("mysql:host=$this->_url;port=$this->_port",$this->_user,$this->_pwd);
             //禁用预处理
             $this->_db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
         } catch(PDOException $e) {

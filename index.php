@@ -26,5 +26,6 @@ $router = new Router();
 //===========增加路由规则==============
 $router->addRule('index','index');
 $router->addRule('main','main');
+$router->addRule('test', 'test');
 //===================================
 $router->run();

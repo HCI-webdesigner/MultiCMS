@@ -96,4 +96,29 @@ class sys {
             }
         }
     }
+
+    /*
+     * loadCustomModule方法
+     * 加载自定义模块的方法
+     * @author C860
+     * @param array $mod_arr 要加载的自定义模块集合
+     */
+    static function loadCustomModule( $mod_arr = array() ) {
+        //判断传参合法性
+        if(!is_array($mod_arr)) {
+            return false;
+        }
+
+        //动态加载各个模块
+        foreach ($mod_arr as $value) {
+
+            try {
+                sys::load($value);
+            }
+            catch(Exception $e) {
+                echo '模块'.$value.'加载失败';
+            }
+
+        }
+    }
 }

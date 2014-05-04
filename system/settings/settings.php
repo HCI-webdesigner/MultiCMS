@@ -11,11 +11,11 @@ session_start();
 /*
  * 默认数据库配置
  */
-$useDB = false;          //是否启用数据库
+$useDB = true;          //是否启用数据库
 $db_url = 'localhost';   //数据库地址
 $db_port = '3306';       //端口
 $db_user = 'root';       //用户名
-$db_pwd = '123';         //密码
+$db_pwd = 'root';         //密码
 $db_name = 'PFW';        //数据库名
 
 /*
@@ -30,7 +30,7 @@ define('DF_CTRLER', 'index');
 define('BASEDIR', __dir__ . '/../..');
 
 //获取基础域名
-define('BASEDOMAIN', 'http://' . $_SERVER['SERVER_NAME'] . '/MultiCMS');
+define('BASEDOMAIN', 'http://' . $_SERVER['SERVER_NAME']);
 
 //运行环境，有两个取值，DEV为开发者环境，PRODUCT为线上环境
 define('ENVIRONMENT', 'DEV');

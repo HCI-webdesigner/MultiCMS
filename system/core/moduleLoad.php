@@ -31,6 +31,6 @@ include_once('system/lib/Sys.php');
 $system = new sys();
 
 /*
- * 自定义模块加载
+ * 数据库模块加载
  */
-sys::load('Template');
+$db = new Database($db_url, $db_port, $db_user, $db_pwd, $db_name, $useDB);

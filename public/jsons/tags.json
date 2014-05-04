@@ -1,0 +1,14 @@
+
+{"name" : "root", "father": "", "children" : [{"name" : "javascript"},{"name" : "html"},{"name" : "css"}]},
+{"name" : "Web", "father": "root", "children" : [{"name" : "javascript"},{"name" : "html"},{"name" : "css"}]},
+{"name" : "后台", "father": "root", "children" : [{"name" : "JSP"},{"name" : "Servlet"}]},
+{"name" : "程序开发", "father": "root", "children" : [{"name" : "报表/图标"},{"name" : "模块引擎"},{"name" : "模板引擎"}, {"name": "网络工具包"}]},
+{"name" : "javascript", "father": "Web", "children" : []},
+{"name" : "html", "father": "Web", "children" : []},
+{"name" : "css", "father": "Web", "children" : []},
+{"name" : "JSP", "father": "后台", "children" : []},
+{"name" : "Servlet", "father": "后台", "children" : []},
+{"name" : "报表/图标制作", "father": "程序开发", "children" : []},
+{"name" : "模块引擎", "father": "程序开发", "children" : []},
+{"name" : "模板引擎作", "father": "程序开发", "children" : []},
+{"name" : "网络工具包", "father": "程序开发", "children" : []}

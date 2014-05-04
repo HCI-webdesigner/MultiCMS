@@ -25,5 +25,7 @@ sys::loadCustomModule($mods_custom);
 $router = new Router();
 //===========增加路由规则==============
 $router->addRule('test','index');
+
+$router->addRule('main', 'main');
 //===================================
 $router->run();

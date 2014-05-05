@@ -16,9 +16,8 @@ window.onload = function () {
         if (keyCode == 13 || keyCode == 108)
             submitProject();
     };
-    document.getElementById("submit").onclick = submitProject;
-    console.log(document.getElementById("submit").onclick);
-    // document.getElementById("submit").onclick = nextPage.bind(null, "createTree");
+    //document.getElementById("submit").onclick = submitProject;
+     document.getElementById("submit").onclick = nextPage.bind(null, "createTree");
 }
 function submitProject() {
     console.log("in");

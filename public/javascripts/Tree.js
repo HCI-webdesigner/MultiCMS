@@ -265,7 +265,7 @@ function submitContent(event, div) {  //发送请求提交该树Json和内容结
     console.log(div);
 
 
-   // if (div.getElementsByTagName("input")[0].innerHTML == "提交") {
+    if (div.getElementsByTagName("input")[0].innerHTML == "提交") {
         var cover = div.parentElement;
         div.style.display = "none";
 
@@ -277,14 +277,14 @@ function submitContent(event, div) {  //发送请求提交该树Json和内容结
         req.onreadystatechange = function () {
             if (req.readyState == 4 && req.status == 200) { //添加成功后返回ok给我
                 if (req.responseText == "ok") {
-                    var p = div1.getElementsByTagName("p")[0];
+                    var p = div.getElementsByTagName("p")[0];
                     p.className = "submit-success";
-                    p.innerHTML = "提交成功！正在自动跳转到下一步";
+                    p.innerHTML = "提交成功！<br />正在自动跳转到下一步";
 
                     setTimeout(function () {
                 		clearInterval(temp);
-                        window.parent.document.getElementsByTagName("body")[0].removeChild(window.parent.document.getElementsByClassName("cover-div")[0]);
-                        nextPage.bind(null, addContentStructure)();
+                        cover.parentElement.removeChild(cover);
+                        nextPage.bind(null, "addContentStructure")();
                     }, 1000);
 
                 } else {
@@ -302,10 +302,10 @@ function submitContent(event, div) {  //发送请求提交该树Json和内容结
             req.open("post", "url?treeJson=" + projects, true);
             req.send();
         }
- /*   } else {
+    } else {
         div.style.display = "none";
         nextPage("addUsers");
-    }*/
+    }
     }
 function submitContentDiv() { //弹出提交的div
     if (window.parent.document.getElementsByClassName("submit-div")[0] == undefined) {

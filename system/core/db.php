@@ -137,6 +137,11 @@ class Database {
 
         //创建数据库表
         $this->getModels();   //获取模型列表
+        
+        if(count($this->_models) <= 0) {
+            return;
+        }
+
         foreach($this->_models as $model) {   //循环映射到数据库
             //加载模型类
             include_once("Models/$model.php");

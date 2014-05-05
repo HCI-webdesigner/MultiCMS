@@ -28,9 +28,9 @@
 		}
 
 		public function typeOP($typeArr) {
-			echo "<pre>";
-			print_r($typeArr);
-			echo "</pre>";
+			// echo "<pre>";
+			// print_r($typeArr);
+			// echo "</pre>";
 			foreach ($typeArr as $val) {
 				if($this->haveChildren($val)) {
 					$this->typeOP($val['children']);
@@ -40,30 +40,30 @@
 		}
 
 		public function store($val, $children) {
-			$db = new Database('127.0.0.1', '', 'root', 'root','MultiCMS', true);
-			$db->_name = 'MultiCMS';
-
+			$db = new Database('127.0.0.1', '', 'root', 'root', 'hhq', true);
+			$database = $db->getInstance();
 			$createSQL = "CREATE TABLE IF NOT EXISTS `type` (
-							id int(10) NOT NULL AUTO_INCREMNET,
+							id int(10) NOT NULL AUTO_INCREMENT,
 							name varchar(20) NOT NULL,
 							children varchar(10) NOT NULL,
 							PRIMARY KEY (id)
 							)";
 
-			$db->_db->exec($createSQL);
+			$database->exec($createSQL);
+
 			if(is_array($children)) {
 				$name = $this->getNames($children);
-				// echo $name;
+
 				$insertSQL = "INSERT INTO `type`
 								(id, name, children)
-								VALUES ('', $name, '')";
+								VALUES ('', '{$val['name']}', '{$name}')";
 			}else {
 				$insertSQL = "INSERT INTO `type`
 								(id, name, children)
-								VALUES ('', $val[name], '')";
+								VALUES ('', '{$val['name']}', '')";
 			}
-			echo $insertSQL;
-			var_dump($db->_db->exec($insertSQL));
+			
+			var_dump($database->exec($insertSQL));
 		}
 
 		protected function getNames($children) {

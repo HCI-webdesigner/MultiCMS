@@ -1,0 +1,129 @@
+ #tree {
+     margin: 30px auto;
+     width: 100%;
+     height: 100%;
+ }
+ body > input[type=button] {
+     display: block;
+     margin: 40px 0 10px 40px;
+     bottom: 0px;
+     position: absolute;
+ }
+ .name {
+     margin-left: 30px;
+ }
+ .new-name {
+     border: 0;
+ }
+ .root-label:before {
+     content: "";
+     background: url(../../public/images/black/home.png) no-repeat;
+     display: inline-block;
+     width: 24px;
+     height: 24px;
+     top: 10px;
+     position: relative;
+     margin: 5px;
+ }
+#tree > a[title="创建根目录"]{
+     display: inline-block;
+     position: relative;
+     margin: 0 0 0 10px;
+     padding: 0;
+     top: 7px;
+     width: 24px;
+     height: 24px;
+     background: url(../../public/images/black/folder_new.png) no-repeat;
+     border: 0;
+     cursor: pointer;
+     z-index: 5;
+ }
+#tree > a[title="创建根目录"]:hover{
+    background-position-x: -24px;
+}
+ .folder:before {
+     content: "";
+     background: url(../../public/images/black/folder-open.png) no-repeat;
+     display: inline-block;
+     width: 46px;
+     height: 24px;
+     top: 10px;
+     position: relative;
+     margin: 5px;
+ }
+
+ .folder-colse:before {
+     content: "";
+     background: url(../../public/images/black/folder_open_icon.png) no-repeat;
+     display: inline-block;
+     width: 24px;
+     height: 24px;
+     top: 10px;
+     position: relative;
+     margin: 5px;
+ }
+ .doc:before {
+     content: "";
+     background: url(../../public/images/black/doc.png) no-repeat;
+     display: inline-block;
+     width: 24px;
+     height: 24px;
+     top: 10px;
+     position: relative;
+     margin: 5px;
+ }
+ .edit-div {
+     display: inline-block;
+     position: relative;
+     margin: 0 10px;
+     padding: 0 10px;
+     height: 100%;
+ }
+ .edit-div a {
+     display: inline-block;
+     position: relative;
+     margin: 0 9px 0 0;
+     padding: 0;
+     top: 7px;
+     width: 24px;
+     height: 24px;
+     background: url(../../public/images/black/edit.png) no-repeat;
+     border: 0;
+     cursor: pointer;
+     z-index: 5;
+ }
+.edit-div a[title="添加下级目录"]{
+    background-position-x: 0px;
+}
+
+.edit-div a[title="修改内容结构"]{
+    background-position-x: -33px;
+}
+
+.edit-div a[title="删除该目录"]{
+    background-position-x: -65px;
+}
+
+.edit-div a[title="添加下级目录"]:hover{
+    background-position-x: -91px;
+}
+.edit-div a[title="修改内容结构"]:hover{
+    background-position-x: -124px;
+}
+.edit-div a[title="删除该目录"]:hover{
+    background-position-x: -156px;
+}
+ 
+ .get-name-div {
+     position: absolute;
+     top: 50px;
+     border: 1px solid;
+     left: -30px;
+     background-color: #fff;
+     padding: 20px 20px 10px 20px;
+     z-index: 10;
+     border-radius: 4px
+ }
+ .get-name-div input[type=button] {
+     display: block;
+ }

@@ -1,50 +1,6 @@
 /**
  * Created by shara on 2014/4/24.
  */
-function initSideBar(){
-    var div = document.getElementsByClassName("sidebar")[0];
-    var ul = div.getElementsByTagName("ul")[0];
-    var children = getChildren("root");
-    appendSideBar(children);
-    for(var i = 0; i < children.length; i++){
-        var child = getChildren(children[i].name);
-    }
-
-}
-
-function appendSideBar(inMain, father, name){ //inMain： true时，window为当前窗口，false即为iframe里， father： 字符串， name： 字符串
-    console.log("father: append    " +  father);
-    var li = document.createElement("li");
-    var a = document.createElement("a");
-    var span = document.createElement("span");
-    a.innerHTML = name;
-    span.className = "hover";
-    li.appendChild(a);
-    li.appendChild(span);
-    if(inMain){
-        var all = document.getElementsByClassName("sidebar")[0].getElementsByTagName("li");
-    }else{
-        var all = window.parent.document.getElementsByClassName("sidebar")[0].getElementsByTagName("li");
-    }
-    for(var i = 0; i < all.length; i++){
-        console.log(all[i].firstElementChild.innerHTML);
-        if(all[i].firstElementChild.innerHTML == father){
-            console.log(all[i]);
-            father = all[i];
-        }
-    }
-    console.log(father);
-    if (father.lastElementChild == undefined || father.lastElementChild.tagName != "UL") {
-        var ul = document.createElement("ul");
-        ul.className = "sub-menu";
-        ul.appendChild(li);
-        father.appendChild(ul);
-    } else {
-        var ul = father.lastElementChild;
-        ul.appendChild(li);
-    }
-}
-
 function createRequest() {
     if (window.XMLHttpRequest) {
         var req = new XMLHttpRequest();
@@ -54,16 +10,70 @@ function createRequest() {
     return req;
 }
 
-/**********华泉注意***************/
-function getChildren(name){
-    req = createRequest();
-    req.onreadystatechange = function(){
-        if(req.readyState == 4 && req.status == 200){
-            console.log(req.responseText);
-            return req.responseText;
-//           //请求返回name的children  json数组回来作为appendOptions的参数；这个json格式：[{"name": "value"}]
-        }
+function resizeWindow(inMain) {
+    if(inMain){
+        var height = window.frames["mainContent"].document.getElementsByTagName("html")[0].scrollHeight;
+        var sidebar = document.getElementsByClassName("sidebar")[0];
+        var sidebarHeight = sidebar.getElementsByTagName("ul")[0].offsetHeight + 57;
+        document.getElementById("mainContent").style.height = height + "px";
+    }else{
+        var height = document.getElementsByTagName("html")[0].scrollHeight;
+        var sidebar = window.parent.document.getElementsByClassName("sidebar")[0];
+        window.parent.document.getElementById("mainContent").style.height = height + "px";
     }
-    req.open("get", "../../public/test.php?name=" + "name", true);
-    req.send();
+    if (height < 600) {
+       sidebar.style.height = sidebarHeight + "px";
+        window.parent.document.getElementById("mainContent").style.height = 600 + "px";
+    } else{
+        sidebar.style.height = height + "px";
+    }
+}
+
+function nextPage(id){
+    window.parent.document.getElementById("mainContent").src = "main/redirectPage/pageName/" + id;
+}
+
+function createCoverDiv(){
+    var cover = document.createElement("div");
+    cover.className = "cover-div";
+    window.parent.document.getElementsByTagName("body")[0].appendChild(cover);
+    return cover;
+}
+function colseContentDiv () {
+        //this.parentElement.style.display = "none";
+        this.parentElement.parentElement.style.display = "none";
+    }
+function createColseDivButton(){
+    var colse = document.createElement("a");
+       colse.className = "edit-content-div-colse";
+       colse.onclick = colseContentDiv;
+    return colse;
+}
+function createLoadingMessage(message, cover){
+    var div = document.createElement("div");
+    div.className = "tip";
+
+    var tip = document.createElement("p");
+    tip.innerHTML = message;
+    var dot = document.createElement("span");
+    dot.innerHTML = "......";
+    
+    div.appendChild(tip);
+    div.appendChild(dot);
+    cover.appendChild(div);
+    
+    return dot;
+}
+function loading(width, tip){
+    var beginWidth = tip.offsetWidth;
+    console.log(beginWidth);
+    console.log(tip.offsetWidth);
+    var temp = setInterval(function(){
+        if(tip.offsetWidth < width){
+            tip.style.width = tip.offsetWidth + 6 + "px";
+        }else{
+        tip.style.width = beginWidth + "px";
+        }
+    }, 500);
+    return temp;
 }

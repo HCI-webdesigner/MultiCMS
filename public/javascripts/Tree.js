@@ -7,14 +7,10 @@ window.onload = function () {
     document.getElementsByClassName("name")[0].onkeyup = treeKeyup;
     document.getElementById("submit").onclick = submitContentDiv;
     projects = new Array();
-    contentStructure = new Array();
     index = 0;
     editFunctions = [{
             "title": "添加下级目录"
     },
-        /*{
-            "title": "修改内容结构"
-    },*/
         {
             "title": "删除该目录"
     }];
@@ -22,7 +18,8 @@ window.onload = function () {
     dataType = ["int", "varchar", "date", "folat", "double"];
 
 }
-function appendNode() {  //创建新目录节点
+
+function appendNode() { //创建新目录节点
     console.log(this); //this为输入框后面的添加按钮或元素（div）
     var parent = this.parentElement;
     if (this.id == "root") {
@@ -36,7 +33,7 @@ function appendNode() {  //创建新目录节点
         this.removeChild(this.getElementsByTagName("a")[1]); //当节点不是绝对子类时，
         removeContentStructure(parentName, num); //不能添加结构内容，如果之前添加了，则需要删除
         }*/
-   	}
+    }
     console.log(projectName);
 
     var li = document.createElement("li");
@@ -77,29 +74,29 @@ function appendNode() {  //创建新目录节点
         ul.appendChild(li);
     }
 
-
+    var node = {
+        "name": projectName,
+        "children": []
+    };
 
     if (this.id == "root") {
         var h4 = document.createElement("h4");
         h4.innerHTML = projectName;
         document.getElementsByTagName("ul")[0].insertBefore(h4, li);
 
-        projects[index] = {
-            "name": projectName,
-            "children": []
-        };
+        projects[index] = new Array();
+        projects[index].push(node);
         index++;
-        console.log("root:   " + projects[index]);
+        console.log(projects[index]);
+        console.log(projects);
     } else {
-        var node = {
-            "name": projectName,
-            "children": []
-        };
-        traversalJson(projects[num], parentName, node, "add");
-        console.log(projects[num]);
+
+        traversalJson(projects[num][0], parentName, node, "add");
+        console.log(projects[num][0]);
     }
     resizeWindow(false);
-    }
+}
+
 function traversalJson(project, parent, node, operation) { //遍历树目录的Json， project:遍历的节点名称， parent：需要插入的父节点， node：需要插入或修改、删除的节点， operation:CRUD操作
     var x;
     console.log(project.name);
@@ -139,7 +136,7 @@ function treeKeyup(e) { //创建目录树的输入框回车即可出发创建函
         appendNode.bind(this.nextElementSibling)();
 }
 
-function newNode() {  //弹出创建新子节点的输入框
+function newNode() { //弹出创建新子节点的输入框
     if (this.nextElementSibling.tagName == "DIV") {
         if (this.nextElementSibling.style.display == "none") {
             this.nextElementSibling.style.display = "";
@@ -179,35 +176,37 @@ function newNode() {  //弹出创建新子节点的输入框
     }
 }
 
-function editName() {  //修改节点的名称 同时会修改Json的内容， 修改h4标题的内容
+function editName() { //修改节点的名称 同时会修改Json的内容， 修改h4标题的内容
     var num = this.nextElementSibling.id.substr(4);
     var project = projects[num];
     traversalJson(project, this.name, this.value, "edit");
     this.name = this.value;
     console.log(projects[num]);
-    
-    for( var x in contentStructure[num]){
-        if(contentStructure[num][x].nodeName == this.name)
+
+    for (var x in contentStructure[num]) {
+        if (contentStructure[num][x].nodeName == this.name)
             contentStructure[num][x].nodeName = this.value;
     }
-    if(this.parentElement.previousElementSibling.tagName == "H4"){
+    if (this.parentElement.previousElementSibling.tagName == "H4") {
         this.parentElement.previousElementSibling.innerHTML = this.value;
     }
     console.log(contentStructure);
 }
+
 function removeNode() { //删除节点， 这个需要删除节点的内容，修改json， 修改内容结构
     var li = this.parentElement.parentElement;
     var ul = li.parentElement;
     var num = this.parentElement.id.substr(4);
     var parent = ul.previousElementSibling.previousElementSibling.value;
-    traversalJson(projects[num], parent, li.childNodes[0].value, "delete")
     if (li.previousElementSibling != undefined && li.previousElementSibling.tagName == "H4") {
         projects.splice(num, 1);
         ul.removeChild(li.previousElementSibling);
         ul.removeChild(li);
-        index --;
+        index--;
     } else {
-        if (ul.childNodes[0] == li) {
+
+        traversalJson(projects[num][0], parent, li.childNodes[0].value, "delete")
+        if (ul.childElementCount == 1) {
             ul.parentElement.className = "doc";
             ul.parentElement.removeChild(ul);
         } else {
@@ -219,13 +218,13 @@ function removeNode() { //删除节点， 这个需要删除节点的内容，�
 }
 
 
-    /************华泉注意*********************
+/************华泉注意*********************
     树的Json结构：
     projects[index] = [
-    {"name": value, "children": [{"name": value, "children":[]}]},
-    ]
+    [{"name": value, "children": [{"name": value, "children":[]}]},
+    ]]
     index代表那个根目录， 因为可以同时创建多个根目录
-    
+   
     内容结构Json：
     contentStructure = [
     [{
@@ -260,53 +259,49 @@ function removeNode() { //删除节点， 这个需要删除节点的内容，�
     contentStructure[index]的index对应着树目录的下标
     我的contentstructure添加时还有bug，但是那个bug不影响你存放数据的格式
     *****************/
-    
-function submitContent(event, div) {  //发送请求提交该树Json和内容结构Json
+
+function submitContent(event, div) { //发送请求提交该树Json和内容结构Json
     console.log(div);
+    var cover = div.parentElement;
+    div.style.display = "none";
 
+    var message = "正在提交内容";
+    var dot = createLoadingMessage(message, cover);
+    var temp = loading(36, dot);
 
-    if (div.getElementsByTagName("input")[0].innerHTML == "提交") {
-        var cover = div.parentElement;
-        div.style.display = "none";
+    var req = createRequest();
+    req.onreadystatechange = function () {
+        if (req.readyState == 4 && req.status == 200) { //添加成功后返回ok给我
+            if (req.responseText == "true") {
+                var p = div.getElementsByTagName("p")[0];
+                p.className = "submit-success";
+                p.innerHTML = "提交成功！<br />正在自动跳转到下一步";
 
-        var message = "正在提交内容";
-        var dot = createLoadingMessage(message, cover);
-        var temp = loading(36, dot);
+                setTimeout(function () {
+                    clearInterval(temp);
+                    cover.parentElement.removeChild(cover);
+                    nextPage.bind(null, "addContentStructure")();
+                }, 1000);
 
-        var req = createRequest();
-        req.onreadystatechange = function () {
-            if (req.readyState == 4 && req.status == 200) { //添加成功后返回ok给我
-                if (req.responseText == "ok") {
-                    var p = div.getElementsByTagName("p")[0];
-                    p.className = "submit-success";
-                    p.innerHTML = "提交成功！<br />正在自动跳转到下一步";
-
-                    setTimeout(function () {
-                		clearInterval(temp);
-                        cover.parentElement.removeChild(cover);
-                        nextPage.bind(null, "addContentStructure")();
-                    }, 1000);
-
-                } else {
+            } else {
                 clearInterval(temp);
-                    cover.getElementsByClassName("tip")[0].removeChild(cover.getElementsByClassName("tip")[0].childNodes[1]);
-                    var p = div1.getElementsByTagName("p")[0];
-                    p.className = "submit-error";
-                    p.innerHTML = "提交失败！";
-                    setTimeout(function () {
-                        cover.removeChild(cover.getElementsByClassName("tip")[0]);
-                        cover.style.display = "none";
-                    }, 1000);
-                }
+                cover.getElementsByClassName("tip")[0].removeChild(cover.getElementsByClassName("tip")[0].childNodes[1]);
+                var p = div.getElementsByTagName("p")[0];
+                p.className = "submit-error";
+                p.innerHTML = "提交失败！";
+                setTimeout(function () {
+                    cover.removeChild(cover.getElementsByClassName("tip")[0]);
+                    cover.style.display = "none";
+                }, 1000);
             }
-            req.open("post", "url?treeJson=" + projects, true);
-            req.send();
         }
-    } else {
-        div.style.display = "none";
-        nextPage("addUsers");
     }
-    }
+    req.open("POST", "../../../main/createSort/", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.send('treeJson=' + JSON.stringify(projects));
+
+}
+
 function submitContentDiv() { //弹出提交的div
     if (window.parent.document.getElementsByClassName("submit-div")[0] == undefined) {
         var cover = createCoverDiv();
@@ -334,7 +329,7 @@ function submitContentDiv() { //弹出提交的div
         cancel.className = "correct";
         cancel.onclick = colseContentDiv;
         div.appendChild(cancel);
-    }else{
+    } else {
         window.parent.document.getElementsByClassName("cover-div")[0].style.display = "block";
     }
 }

@@ -66,8 +66,6 @@ function createLoadingMessage(message, cover){
 }
 function loading(width, tip){
     var beginWidth = tip.offsetWidth;
-    console.log(beginWidth);
-    console.log(tip.offsetWidth);
     var temp = setInterval(function(){
         if(tip.offsetWidth < width){
             tip.style.width = tip.offsetWidth + 6 + "px";

@@ -111,12 +111,97 @@ class main extends Controller {
     }
 
     /*
-    *createSort function
-    *@param json string json格式的字符串
+    *haveChildren function
+    *@param arr array 类型数组
+    *判断数组是否含有children
     *@author hhq
     */
-    public function createSort($jsonStr) {
+    public function haveChildren($arr) {
+        print_r($arr);
+        if(is_array($arr['children']) && count($arr['children']) == 0) {
+            return false;
+        }else {
+            return true;
+        }
+    }
 
+    /*
+    *typeOP function
+    *@param typeArr array 保存类型的数组
+    *递归地检查数组，将每一条记录插入到数据库
+    *@author hhq
+    */
+    public function typeOP($typeArr) {
+        foreach ($typeArr as $val) {
+            $parent = $val['name'];
+            if($this->haveChildren($val)) {
+                $this->typeOP($val['children']);
+            }
+
+            // $this->store($val, $val['children']);
+            $this->store($parent, $val['name']);
+        }
+    }
+
+    /*
+    *store function
+    *@param parent string 父节点
+    *@param name string 节点名称
+    *将记录插入到数据库中
+    *@author hhq
+    */
+    public function store($parent, $name) {
+        $db = new Database('127.0.0.1', '', 'root', 'root', 'hhq', true);
+        $database = $db->getInstance();
+
+        //创建数据库表
+        $createSQL = "CREATE TABLE IF NOT EXISTS `type` (
+                        id int(10) NOT NULL AUTO_INCREMENT,
+                        name varchar(20) NOT NULL,
+                        parent varchar(10) NOT NULL,
+                        PRIMARY KEY (id)
+                        )";
+        $database->exec($createSQL);
+
+        if(is_array($children) && (count($children) != 0)) {
+
+            $insertSQL = "INSERT INTO `type`
+                            (id, name, parent)
+                            VALUES ('', '{$val['name']}', '{$name}')";
+        }else {
+            $insertSQL = "INSERT INTO `type`
+                            (id, name, parent)
+                            VALUES ('', '{$val['name']}', '')";
+        }
+        
+        $database->exec($insertSQL);
+    }
+
+    /*
+    *createSort function
+    *创建分类的数据库
+    *@author hhq
+    */
+    public function createSort() {
+        if(isset($_POST['treeJson'])) {
+            echo $_POST['treeJson'];
+            $jsonArr = json_decode($_POST['treeJson'], true);
+            $label = false;
+            foreach ($jsonArr as $typeArr) {
+                // print_r($typeArr);
+                if($this->typeOP($typeArr) !== false) {
+                    $label = true;
+                }
+            }
+
+            if($label === true) {
+                echo "true";
+            }else {
+                echo "false";
+            }
+        }else {
+            echo "false";
+        }
     }
 
 }

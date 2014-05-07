@@ -117,7 +117,6 @@ class main extends Controller {
     *@author hhq
     */
     public function haveChildren($arr) {
-        print_r($arr);
         if(is_array($arr['children']) && count($arr['children']) == 0) {
             return false;
         }else {
@@ -131,15 +130,13 @@ class main extends Controller {
     *递归地检查数组，将每一条记录插入到数据库
     *@author hhq
     */
-    public function typeOP($typeArr) {
+    public function typeOP($typeArr, $parent) {
         foreach ($typeArr as $val) {
-            $parent = $val['name'];
-            if($this->haveChildren($val)) {
-                $this->typeOP($val['children']);
-            }
-
-            // $this->store($val, $val['children']);
             $this->store($parent, $val['name']);
+            if($this->haveChildren($val)) {
+                $se_parent = $val['name'];
+                $this->typeOP($val['children'], $se_parent);
+            }
         }
     }
 
@@ -153,28 +150,22 @@ class main extends Controller {
     public function store($parent, $name) {
         $db = new Database('127.0.0.1', '', 'root', 'root', 'hhq', true);
         $database = $db->getInstance();
-
-        //创建数据库表
         $createSQL = "CREATE TABLE IF NOT EXISTS `type` (
                         id int(10) NOT NULL AUTO_INCREMENT,
                         name varchar(20) NOT NULL,
                         parent varchar(10) NOT NULL,
                         PRIMARY KEY (id)
                         )";
+
         $database->exec($createSQL);
-
-        if(is_array($children) && (count($children) != 0)) {
-
-            $insertSQL = "INSERT INTO `type`
-                            (id, name, parent)
-                            VALUES ('', '{$val['name']}', '{$name}')";
-        }else {
-            $insertSQL = "INSERT INTO `type`
-                            (id, name, parent)
-                            VALUES ('', '{$val['name']}', '')";
-        }
         
-        $database->exec($insertSQL);
+        $insertSQL = "INSERT INTO `type`
+                        (id, name, parent)
+                        VALUES ('', '{$name}', '{$parent}')";
+
+        if(!$database->exec($insertSQL)) {
+            echo "false";
+        }
     }
 
     /*
@@ -184,20 +175,10 @@ class main extends Controller {
     */
     public function createSort() {
         if(isset($_POST['treeJson'])) {
-            echo $_POST['treeJson'];
             $jsonArr = json_decode($_POST['treeJson'], true);
             $label = false;
             foreach ($jsonArr as $typeArr) {
-                // print_r($typeArr);
-                if($this->typeOP($typeArr) !== false) {
-                    $label = true;
-                }
-            }
-
-            if($label === true) {
-                echo "true";
-            }else {
-                echo "false";
+                $this->typeOP($typeArr, "");
             }
         }else {
             echo "false";

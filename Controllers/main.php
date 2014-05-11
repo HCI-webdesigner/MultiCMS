@@ -132,7 +132,14 @@ class main extends Controller {
     */
     public function typeOP($typeArr, $parent) {
         foreach ($typeArr as $val) {
-            $this->store($parent, $val['name']);
+            if(strlen($parent) == 0) {
+                $this->store($parent, $val['name']);
+            }else {
+                $this->loadModel('type');
+                $type_model = new Type();
+                $parentID = $type_model->getParentID($parent);
+                $this->store($parentID, $val['name']);
+            }
             if($this->haveChildren($val)) {
                 $se_parent = $val['name'];
                 $this->typeOP($val['children'], $se_parent);
@@ -151,17 +158,19 @@ class main extends Controller {
         $db = new Database('127.0.0.1', '', 'root', 'root', 'hhq', true);
         $database = $db->getInstance();
         $createSQL = "CREATE TABLE IF NOT EXISTS `type` (
-                        id int(10) NOT NULL AUTO_INCREMENT,
+                        id varchar(36) NOT NULL,
                         name varchar(20) NOT NULL,
-                        parent varchar(10) NOT NULL,
+                        parent varchar(36) NOT NULL,
                         PRIMARY KEY (id)
                         )";
 
         $database->exec($createSQL);
+        $uuid = new UUID();
+        $id = $uuid->create();
         
         $insertSQL = "INSERT INTO `type`
                         (id, name, parent)
-                        VALUES ('', '{$name}', '{$parent}')";
+                        VALUES ('{$id}', '{$name}', '{$parent}')";
 
         if(!$database->exec($insertSQL)) {
             echo "false";

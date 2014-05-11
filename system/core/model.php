@@ -31,13 +31,14 @@ class Model {
         $vlist = array_values($condition);
         //检查查询条件是否存在
         if(count($klist) > 0) {
-            $queryString = 'select * from ' . get_class($this) . ' where';
+            $count = count($klist);
+            $queryString = 'select * from ' . strtolower(get_class($this)) . ' where';
             for($i=0; $i<$count; ++$i) {
                 $queryString .= ' ' . $klist[$i] . '=?';
             }
         }
         else {
-            $queryString = 'select * from ' . get_class($this);
+            $queryString = 'select * from ' . strtolower(get_class($this));
         }
         //检查排序条件是否存在
         if(count($order) > 0) {

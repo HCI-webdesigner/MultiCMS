@@ -16,7 +16,7 @@ $db_url = 'localhost';   //数据库地址
 $db_port = '3306';       //端口
 $db_user = 'root';       //用户名
 $db_pwd = 'root';         //密码
-$db_name = 'PFW';        //数据库名
+$db_name = 'hhq';        //数据库名
 
 /*
  * 默认控制器

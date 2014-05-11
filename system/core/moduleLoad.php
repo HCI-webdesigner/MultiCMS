@@ -34,3 +34,5 @@ $system = new sys();
  * 数据库模块加载
  */
 $db = new Database($db_url, $db_port, $db_user, $db_pwd, $db_name, $useDB);
+
+include ('system/lib/UUID.php');

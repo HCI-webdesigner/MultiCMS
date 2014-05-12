@@ -20,71 +20,139 @@ class Model {
      * fetch方法
      * 从数据库表中获取一条记录
      * @author C860
-     * @param array $condition 查询条件
-     * @param array $order 排序条件
-     * @param boolean $reverse 排序是否为逆序
+     * @param array $query 查询表达式
+     * @param array $value 查询值
      * @return array|false 返回记录或false
      */
-    function fetch($condition = array(), $order = array(), $reverse = true) {
-        //预处理查询条件
-        $klist = array_keys($condition);
-        $vlist = array_values($condition);
-        //检查查询条件是否存在
-        if(count($klist) > 0) {
-            $count = count($klist);
-            $queryString = 'select * from ' . strtolower(get_class($this)) . ' where';
-            for($i=0; $i<$count; ++$i) {
-                $queryString .= ' ' . $klist[$i] . '=?';
-            }
+    function fetch($query = '', $value = array()) {
+        //判断是否存在查询条件
+        if(strlen($query) > 0) {
+            $queryString = 'select * from ' . strtolower(get_class($this)) . ' ' . $query;
         }
         else {
             $queryString = 'select * from ' . strtolower(get_class($this));
         }
-        //检查排序条件是否存在
-        if(count($order) > 0) {
-            $queryString .= ' order by ' . $order[0];
-            $queryString .= $reverse?' desc':'';
-        }
-        //处理查询
         try {
-            $query = $this->db->prepare($queryString);
-            $query->execute($vlist);
-            if($query->rowCount() > 0) {
-                return $query->fetchAll();
+            $dbQuery = $this->db->prepare($queryString);
+            $dbQuery->execute($value);
+            if($dbQuery->rowCount() > 0) {
+                return $dbQuery->fetchAll();
             }
             else {
                 return false;
             }
         } catch(PDOException $e) {
             echo $e;
+            exit(0);
         }
     }
 
     /*
-     * delete方法
+     * remove方法
      * 从数据库删除符合条件的记录
      * @author C860
-     * @param query 记录的约束条件语句
+     * @param array $query 查询表达式
+     * @param array $value 查询值
+     * @return boolean 操作是否成功
      */
-    function delete($query) {
-
+    function remove($query = '', $value = array()) {
+        //判断是否存在查询条件
+        if(strlen($query) > 0) {
+            $queryString = 'delete from ' . get_class($this) . ' ' . $query;
+        }
+        else {
+            $queryString = 'delete from ' . get_class($this);
+        }
+        try {
+            $dbQuery = $this->db->prepare($queryString);
+            if($dbQuery->execute($value)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
     }
 
     /*
-     * save方法
+     * update方法
      * 将当前对象的数据同步到数据库中
+     * @param array $query 查询表达式
+     * @param array $value 查询值
      * @author C860
      */
-    function save() {
-
+    function update($query = '', $value = array()) {
+        $queryString = 'update ' . get_class($this) . ' set ';
+        //判断参数合法性
+        if(strlen($query) > 0) {
+            $queryString .= $query;
+        }
+        else {
+            return false;
+        }
+        try {
+            $dbQuery = $this->db->prepare($queryString);
+            if($dbQuery->execute($value)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            echo $e;
+            exit(0);
+        }
     }
 
     /*
-     * add方法
+     * create方法
      * 将当前对象以添加的方式同步到数据库中
      * @author C860
+     * @return boolean 是否成功
      */
-    function add() {
-
+    function create() {
+        $keys = array();
+        $values = array();
+        //分开存储类的变量成员名和变量值
+        foreach ($this as $key => $value) {
+            if($key != 'db') {
+                array_push($keys, $key);
+                array_push($values, $value);
+            }
+        }
+        $queryString = 'insert into ' . get_class($this) . ' (';
+        //遍历所有字段名
+        $last = array_pop($keys);
+        foreach ($keys as $value) {
+            $queryString .= $value;
+            $queryString .= ',';
+        }
+        $queryString .= $last;
+        $queryString .= ')values(';
+        array_push($keys, $last);
+        //遍历所有字段值
+        $last = array_pop($values);
+        foreach ($values as $value) {
+            $queryString .= '?';
+            $queryString .= ',';
+        }
+        $queryString .= '?';
+        $queryString .= ')';
+        array_push($values, $last);
+        try {
+            $query = $this->db->prepare($queryString);
+            if($query->execute($values)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            echo $e;
+            exit(0);
+        }
     }
 }

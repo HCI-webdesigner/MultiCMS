@@ -299,7 +299,7 @@ function submitContent(event, div) {  //发送请求提交该树Json和内容结
                 }
             }
         }
-        req.open("POST", "../../../main/createSort/", true);
+        req.open("POST", "../../main/createSort/", true);
         req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         req.send('treeJson='+JSON.stringify(projects));
     }

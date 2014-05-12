@@ -30,7 +30,7 @@ function resizeWindow(inMain) {
 }
 
 function nextPage(id){
-    window.parent.document.getElementById("mainContent").src = "main/redirectPage/pageName/" + id;
+    window.parent.document.getElementById("mainContent").src = "main/redirectPage/" + id;
 }
 
 function createCoverDiv(){

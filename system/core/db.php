@@ -137,11 +137,9 @@ class Database {
 
         //创建数据库表
         $this->getModels();   //获取模型列表
-        
         if(count($this->_models) <= 0) {
             return;
         }
-
         foreach($this->_models as $model) {   //循环映射到数据库
             //加载模型类
             include_once("Models/$model.php");
@@ -152,34 +150,36 @@ class Database {
             $qstr = "create table $model(";   //创建表语句
             //循环所有字段
             foreach($properties as $property) {
-                $qstr.=$property->getName();
+                $qstr .= $property->getName();
                 //标识该字段是否为主键
                 $pk = false;
                 $doc = $property->getDocComment();
                 preg_match_all($regexp,$doc,$type);
                 //循环所有字段类型描述
                 foreach($type[0] as $t) {
-                    if($t=='PRIMARYKEY') {
+                    if($t == 'PRIMARYKEY') {
                         $pk = true;
                     }
                     else {
-                        $qstr.=" $t";
+                        $qstr .= " $t";
                     }
                 }
-                if($pk==true) {
-                    $qstr.=',PRIMARY KEY('.$property->getName().'),';
+                if($pk == true) {
+                    $qstr .= ',PRIMARY KEY('.$property->getName().'),';
                 }
                 else {
                     //若为最后一个字段则不加逗号
-                    if($property==$properties[count($properties)-1]) {
-                        $qstr.='';
+                    if($property == $properties[count($properties)-1]) {
+                        $qstr .= '';
                     }
                     else {
-                        $qstr.=',';
+                        $qstr .= ',';
                     }
                 }
             }
-            $qstr.=')';
+            $qstr .= ')';
+            //设置数据库编码为UTF-8
+            $qstr .= ' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
             $this->_db->exec($qstr);
         }
     }

@@ -57,7 +57,8 @@ function submitProject() {
         }
 
     }
-    req.open("POST", "../../../main/createProject/", true);
+    
+    req.open("POST", "../../main/createProject/", true);
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     req.send('projectName='+document.getElementById("projectName").value);
 }

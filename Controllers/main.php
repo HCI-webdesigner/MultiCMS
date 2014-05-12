@@ -3,7 +3,11 @@
  * 框架默认控制器
  */
 class main extends Controller {
+    private $type_model;
+
     function __construct() {
+        $this->loadModel('type');
+        $this->type_model = new Type();
         //@TODO add something that will be loaded while the controller start to run 
     }
 
@@ -21,7 +25,7 @@ class main extends Controller {
     *@author hhq
     */
     public function redirectPage($params) {
-    	$this->render($params['pageName']);
+    	$this->render($params[0]);
     }
 
     /*
@@ -135,9 +139,7 @@ class main extends Controller {
             if(strlen($parent) == 0) {
                 $this->store($parent, $val['name']);
             }else {
-                $this->loadModel('type');
-                $type_model = new Type();
-                $parentID = $type_model->getParentID($parent);
+                $parentID = $this->type_model->getParentID($parent);
                 $this->store($parentID, $val['name']);
             }
             if($this->haveChildren($val)) {
@@ -177,10 +179,10 @@ class main extends Controller {
         }
     }
 
-    /*
-    *createSort function
-    *创建分类的数据库
-    *@author hhq
+    /**
+    * createSort function
+    * 创建分类的数据库
+    * @author hhq
     */
     public function createSort() {
         if(isset($_POST['treeJson'])) {
@@ -192,6 +194,14 @@ class main extends Controller {
         }else {
             echo "false";
         }
+    }
+
+    public function resolveSort() {
+        $results = $this->type_model->getTypes();
+
+        echo "<pre>";
+        print_r($results);
+        echo "</pre>";
     }
 
 }

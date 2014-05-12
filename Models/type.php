@@ -11,8 +11,18 @@
 		* @author hhq
 		*/
 		public function getParentID($name) {
-			$row = $this->fetch(array("name" => $name));
+			$params = array($name);
+			$row = $this->fetch('where name=?', $params);
 
 			return $row[0]['id'];
+		}
+
+		/**
+		* @author hhq
+		*/
+		public function getTypes() {
+			$rows = $this->fetch();
+
+			return $rows;
 		}
 	}

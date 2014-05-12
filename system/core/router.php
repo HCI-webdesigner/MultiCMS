@@ -63,16 +63,16 @@ Class Router {
      * @return false|控制器名称
      */
     protected function _getRule($path, $method) {
-        if(strtolower($method) == 'get' && array_key_exists($path,$this->_getRule)) {
+        if(strtolower($method) == 'get' && array_key_exists($path, $this->_getRule)) {
             return $this->_getRule[$path];
         }
-        else if(strtolower($method) == 'post' && array_key_exists($path,$this->_postRule)) {
+        else if(strtolower($method) == 'post' && array_key_exists($path, $this->_postRule)) {
             return $this->_postRule[$path];
         }
-        else if(strtolower($method) == 'put' && array_key_exists($path,$this->_putRule)) {
+        else if(strtolower($method) == 'put' && array_key_exists($path, $this->_putRule)) {
             return $this->_putRule[$path];
         }
-        else if(strtolower($method) == 'delete' && array_key_exists($path,$this->_deleteRule)) {
+        else if(strtolower($method) == 'delete' && array_key_exists($path, $this->_deleteRule)) {
             return $this->_deleteRule[$path];
         }
         else {
@@ -128,6 +128,7 @@ Class Router {
         //存储参数
         $params = [];
 
+        //[0]=Controller, [1]=Method, [2..N]=[Value1..ValueN]
         if(count($path) > 1 && $path[1] == '') {
             $method = 'index';
         }
@@ -138,9 +139,9 @@ Class Router {
             $method = $path[1];
             //存储参数
             $i=2;
-            while( isset($path[$i]) && isset($path[$i+1]) ) {
-                $params[$path[$i]] = $path[$i+1];
-                $i+=2;
+            while( isset($path[$i]) ) {
+                array_push($params, $path[$i]);
+                ++$i;
             }
         }
 

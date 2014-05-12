@@ -27,7 +27,7 @@ $(document).ready(function() {
         var obj = $("div.sidebar").find("a")[i];
         if (obj.id != "") {
             obj.onclick = function () {
-                $("#mainContent")[0].src = 'main/redirectPage/pageName/' + $(this).attr("id");
+                $("#mainContent")[0].src = 'main/redirectPage/' + $(this).attr("id");
             };
         }
     }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>添加内容结构</title>
+        <script src="../../public/javascripts/addContentStruture.js"></script>
+        <script src="../../public/javascripts/functions.js"></script>
+        <link rel="stylesheet" href="../../public/stylesheets/index.css" />
+        <link rel="stylesheet" href="../../public/stylesheets/createTree.css" />
+        <style>
+            .doc a{
+                display: inline-block;
+                position: relative;
+                margin: 0 9px 0 0;
+                padding: 0;
+                top: 7px;
+                width: 24px;
+                height: 24px;
+                background: url(../../public/images/black/edit.png) no-repeat;
+                border: 0;
+                cursor: pointer;
+                z-index: 5;
+            }
+            .edited-structure p{
+                display: inline-block;
+                color: #ccc;
+            }
+            .edited-structure p:before{
+                display: inline-block;
+                position: relative;
+                margin: 0 9px 0 0;
+                padding: 0;
+                top: 7px;
+                width: 24px;
+                height: 24px;
+                background: url(../../public/images/black/ok.png) no-repeat;
+                content: " ";
+                font-size: 14px;
+                color: #ccc;
+            }
+            .doc a[title="修改内容结构"]{
+                background-position-x: -33px;
+            }
+            .doc a[title="修改内容结构"]:hover{
+                background-position-x: -124px;
+            }
+
+            #begin label{
+                text-align: left;
+                padding: 0 5px;
+                margin-right: 50px;
+            }
+    </style>
+    </head>
+    <body>
+        <h3>项目名称：</h3>
+        <div id="begin"></div> 
+        <input type="button" class="correct" id="submit" value="下一步">
+    </body>
+</html>

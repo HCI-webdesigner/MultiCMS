@@ -19,17 +19,17 @@ var children1 = [{"name" : "报表/图标"},{"name" : "模块引擎"},{"name" : 
 
 var current = new json(null, null);
 window.onload = function(){
-    appendOptions(children);  //自己测试用
+ appendOptions(children);  //自己测试用
 //    initSelect();
-    document.getElementsByTagName("select")[0].onchange = addSelect;
-    document.getElementsByClassName("submit")[0].onclick = sendMessage;
+document.getElementsByTagName("select")[0].onchange = addSelect;
+ document.getElementsByClassName("submit")[0].onclick = sendMessage;
 }
 
 
 
 function json(father, name){
-    this.father = father;
-    this.name = name;
+ this.father = father;
+ this.name = name;
 }
 function initSelect(){
     appendOptions(getChildren("root"));

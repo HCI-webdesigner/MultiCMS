@@ -3,150 +3,33 @@
  */
 
 window.onload = function () {
-    document.getElementById("root").onclick = appendNode;
-    document.getElementsByClassName("name")[0].onkeyup = treeKeyup;
+    var tree = new Tree();
+    document.getElementById("tree").childNodes[0].innerHTML = "项目名称：" + window.parent.projectName;
+    document.getElementById("root").onclick = function(){tree.createTree.bind(tree, this)()};
+    document.getElementsByClassName("name")[0].onkeyup = function(){treeKeyup.bind(this, event, tree)();}
     document.getElementById("submit").onclick = submitContentDiv;
+    //document.getElementById("submit").onclick = nextPage.bind(null, "addContentStructure");
     projects = new Array();
     index = 0;
-    editFunctions = [{
-            "title": "添加下级目录"
-    },
-        {
-            "title": "删除该目录"
-    }];
-
-    dataType = ["int", "varchar", "date", "folat", "double"];
-
 }
 
-function appendNode() { //创建新目录节点
-    console.log(this); //this为输入框后面的添加按钮或元素（div）
-    var parent = this.parentElement;
-    if (this.id == "root") {
-        var num = index;
-        var projectName = this.previousElementSibling.value;
-    } else {
-        var num = this.id.substr(4);
-        var parentName = this.previousElementSibling.value;
-        var projectName = this.getElementsByTagName("input")[0].value;
-        /*if(this.parentElement.className == "doc"){
-        this.removeChild(this.getElementsByTagName("a")[1]); //当节点不是绝对子类时，
-        removeContentStructure(parentName, num); //不能添加结构内容，如果之前添加了，则需要删除
-        }*/
-    }
-    console.log(projectName);
-
-    var li = document.createElement("li");
-    li.className = "doc";
-    var div = document.createElement("div");
-    var text = document.createElement("input");
-    text.type = "text";
-    text.className = "new-name";
-    text.value = projectName;
-    text.name = projectName;
-    text.onchange = editName;
-    div.id = "node" + num;
-    div.className = "edit-div";
-
-    var a = new Array();
-    for (var i = 0; i < 2; i++) {
-        a[i] = document.createElement("a");
-        div.appendChild(a[i]);
-        a[i].title = editFunctions[i].title;
-    }
-
-    a[0].onclick = newNode;
-    /*a[1].onclick = function () {
-        editContentStructure.bind(null, event, this.parentElement.previousElementSibling.value, num)();
-    }*/
-    a[1].onclick = removeNode;
-
-    li.appendChild(text);
-    li.appendChild(div);
-    if (parent.lastElementChild == undefined || parent.lastElementChild.tagName != "UL") {
-
-        var ul = document.createElement("ul");
-        ul.appendChild(li);
-        parent.className = "folder";
-        parent.appendChild(ul);
-    } else {
-        var ul = parent.lastElementChild;
-        ul.appendChild(li);
-    }
-
-    var node = {
-        "name": projectName,
-        "children": []
-    };
-
-    if (this.id == "root") {
-        var h4 = document.createElement("h4");
-        h4.innerHTML = projectName;
-        document.getElementsByTagName("ul")[0].insertBefore(h4, li);
-
-        projects[index] = new Array();
-        projects[index].push(node);
-        index++;
-        console.log(projects[index]);
-        console.log(projects);
-    } else {
-
-        traversalJson(projects[num][0], parentName, node, "add");
-        console.log(projects[num][0]);
-    }
-    resizeWindow(false);
-}
-
-function traversalJson(project, parent, node, operation) { //遍历树目录的Json， project:遍历的节点名称， parent：需要插入的父节点， node：需要插入或修改、删除的节点， operation:CRUD操作
-    var x;
-    console.log(project.name);
-    if (project.name == parent) {
-        switch (arguments[3]) {
-        case "add":
-            project.children.push(node);
-            return true;
-            break;
-        case "delete":
-            var j = 0;
-            console.log(project.children);
-            for (j in project.children) {
-                if (project.children[j].name == node) {
-                    project.children.splice(j, 1);
-                    return true;
-                }
-            }
-            break;
-        case "edit":
-            project.name = node; //parent为需要修改的节点name，node为改后的字符串
-            return true;
-            break;
-        }
-    }
-    for (x in project.children) {
-        console.log(project.children);
-        if (project.children[x].length != 0) {
-            traversalJson(project.children[x], parent, node, operation);
-        }
-    }
-}
-
-function treeKeyup(e) { //创建目录树的输入框回车即可出发创建函数
+function treeKeyup(e, tree) { //创建目录树的输入框回车即可出发创建函数
     var keyCode = e.keyCode;
     if (keyCode == 13 || keyCode == 108)
-        appendNode.bind(this.nextElementSibling)();
+        tree.createTree.bind(tree, this.nextElementSibling)();
 }
 
-function newNode() { //弹出创建新子节点的输入框
-    if (this.nextElementSibling.tagName == "DIV") {
-        if (this.nextElementSibling.style.display == "none") {
-            this.nextElementSibling.style.display = "";
+function newNode(tree) { //弹出创建新子节点的输入框
+    var div = this.nextElementSibling;
+    if (div.tagName == "DIV") {
+        if (div.style.display == "none") {
+            div.style.display = "";
             //          $(this).contents().animate({height:"136px",opacity: "1"},600);
         } else {
-            this.nextElementSibling.style.display = "none";
+            div.style.display = "none";
             //           $(this).contents().animate({height:"0px",opacity: "0"},600);
         }
     } else {
-        console.log("in new node");
         var div = document.createElement("div");
         div.className = "get-name-div";
         var name = document.createElement("input");
@@ -159,21 +42,22 @@ function newNode() { //弹出创建新子节点的输入框
         div.appendChild(name);
         div.appendChild(button);
         this.parentElement.insertBefore(div, this.nextElementSibling);
-        name.onkeyup = function (e) {
+        name.onkeyup = function (e, tree) {
             var keyCode = e.keyCode;
             if (keyCode == 13 || keyCode == 108) {
-                appendNode.bind(this.parentElement.parentElement)();
+                tree.createTree.bind(tree, this.parentElement.parentElement)();
                 this.value = "";
                 this.parentElement.style.display = "none";
             }
 
         };
-        button.onclick = function () {
+        button.onclick = function (event, tree) {
             this.parentElement.style.display = "none";
-            appendNode.bind(button.parentElement.parentElement)();
+            tree.createTree.bind(tree,button.parentElement.parentElement)();
             this.previousElementSibling.value = "";
         }
     }
+    document.activeElement = div.childNodes[0];
 }
 
 function editName() { //修改节点的名称 同时会修改Json的内容， 修改h4标题的内容
@@ -334,18 +218,4 @@ function submitContentDiv() { //弹出提交的div
     }
 }
 
-function createSelect() {
-    var type = document.createElement("select");
-    type.onblur = checkAdd;
-    var options = new Array();
-    options[0] = document.createElement("option");
-    options[0].innerHTML = "数据类型";
-    type.appendChild(options[0]);
-    for (var i = 1; i < 5; i++) {
-        options[i] = document.createElement("option");
-        options[i].innerHTML = dataType[i];
-        options[i].value = dataType[i];
-        type.appendChild(options[i]);
-    }
-    return type;
-}
+

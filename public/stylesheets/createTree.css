@@ -1,13 +1,12 @@
  #tree {
-     margin: 30px auto;
-     width: 100%;
+     margin: 30px 0 30px 30px;
      height: 100%;
  }
  body > input[type=button] {
      display: block;
-     margin: 40px 0 10px 40px;
-     bottom: 0px;
-     position: absolute;
+     margin: 0 0 0 40px;
+     top: 30px;
+     position: relative;
  }
  .name {
      margin-left: 30px;
@@ -96,20 +95,14 @@
     background-position-x: 0px;
 }
 
-.edit-div a[title="修改内容结构"]{
-    background-position-x: -33px;
-}
-
-.edit-div a[title="删除该目录"]{
+ .edit-div a[title="删除该目录"]{
     background-position-x: -65px;
 }
 
 .edit-div a[title="添加下级目录"]:hover{
     background-position-x: -91px;
 }
-.edit-div a[title="修改内容结构"]:hover{
-    background-position-x: -124px;
-}
+
 .edit-div a[title="删除该目录"]:hover{
     background-position-x: -156px;
 }
@@ -117,7 +110,7 @@
  .get-name-div {
      position: absolute;
      top: 50px;
-     border: 1px solid;
+     border: 1px solid #ccc;
      left: -30px;
      background-color: #fff;
      padding: 20px 20px 10px 20px;

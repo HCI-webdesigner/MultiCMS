@@ -222,8 +222,12 @@ li {
 .edit-content-div table tr:nth-child(2n), .edit-content-div table tr:nth-child(2n) input{
     background-color: #f9f9f9;
 }
+tr.edit-content-input-able input[type="text"]{
+    border: 1px solid #ccc;
+}
 .edit-content-div select {
     margin: 0 10px;
+    height: 30px;
 }
 .edit-content-div-colse {
     background: url(../../public/images/black/colse32.png) no-repeat;
@@ -245,6 +249,13 @@ li {
     background-color: #fff;
     border: 1px solid;
 }
+.warning{
+    color: red;
+    font-size: 12px;
+    position: relative;
+    top: 40px;
+    margin-left: 50px;
+}
 .must:after {
     content: "*";
     color: red;
@@ -265,7 +276,7 @@ li {
 .tip {
     margin: 300px auto;
     padding: 0;
-    width: 186px;
+    width: 200px;
 }
 .tip p,
 .tip span {

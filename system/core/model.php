@@ -36,7 +36,7 @@ class Model {
             $dbQuery = $this->db->prepare($queryString);
             $dbQuery->execute($value);
             if($dbQuery->rowCount() > 0) {
-                return $dbQuery->fetchAll();
+                return $dbQuery->fetchAll(PDO::FETCH_ASSOC);
             }
             else {
                 return false;

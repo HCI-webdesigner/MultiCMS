@@ -196,11 +196,51 @@ class main extends Controller {
         }
     }
 
+    public function getTree($items) {
+        $tree = array(); //格式化好的树
+        foreach ($items as $item) {
+            if (isset($items[$item['parent_id']]) && $items[$item['parent_id']] != "") {
+                $items[$item['parent_id']]['children'][] = &$items[$item['c_id']];
+            }
+            else {
+                $tree[] = &$items[$item['c_id']];
+            }
+        }
+        return $tree;
+    }
+
+    public function findParentID($items, $parent) {
+        $items_count = count($items);
+        for($i = 0; $i != $items_count; ++$i) {
+            if($items[$i]['id'] == $parent) {
+                return $i;
+            }
+        }
+
+        return false;
+    }
+
     public function resolveSort() {
         $results = $this->type_model->getTypes();
 
+        $i = 0;
+        foreach ($results as &$rows) {
+            if($this->findParentID($results, $rows['parent']) !== false) {
+                $rows['parent_id'] = $this->findParentID($results, $rows['parent']);
+            }else {
+                $rows['parent_id'] = "";
+            }
+            $rows['c_id'] = $i;
+            ++$i;
+        }
+
+        $typeArr = array();
+
         echo "<pre>";
         print_r($results);
+
+        echo "<pre>";
+        print_r($this->getTree($results));
         echo "</pre>";
     }
 

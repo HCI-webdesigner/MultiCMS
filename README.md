@@ -5,8 +5,7 @@ MultiCMS
 
 ### Dependence
 
-1. PFW
-2. Smarty
+系统架构以Shield框架为基础，框架源码托管地址：https://github.com/C860/Shield
 
 MIT
 ===
